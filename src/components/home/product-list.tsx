@@ -1,4 +1,4 @@
-"use-client"
+"use client"
 
 import { Product } from "@/generated/prisma";
 import { ProductItem } from "./product-item";
