@@ -1,11 +1,16 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   images: {
     remotePatterns: [
-      new URL(`${process.env.NEXT_PUBLIC_BASE_URL}/**`)
-    ]
-  }
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "3000",
+        pathname: "/products/**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
