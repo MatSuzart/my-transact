@@ -1,4 +1,4 @@
-"use-client"
+"use client"
 
 import { useCart } from "@/app/stores/cart";
 import { Button } from "../ui/button";
