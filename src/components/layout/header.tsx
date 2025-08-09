@@ -11,7 +11,7 @@ export const Header = () =>{
                 <div className="text-2xl font-bold">Products</div>
             </Link>
             <div className="flex gap-2">
-                <Button>Login / Cadastro</Button>
+                
                 <CartButton />
             </div>
         </header>
