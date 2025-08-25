@@ -15,3 +15,9 @@ export const decimalToMoney = (price:string | number | Prisma.Decimal)=>{
     maximumFractionDigits:2
   })
 }
+
+export const checkFieldError = (fieldName:string, erros:any) =>{
+  if(erros === null) return false;
+  if(!erros[fieldName]) return false;
+  return erros[fieldName][0];
+}
