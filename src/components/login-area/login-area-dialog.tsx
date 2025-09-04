@@ -6,6 +6,7 @@ import { useAuth } from "@/app/stores/auth";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { LoginAreaStepEmail } from "./login-area-step-email";
+import { getCookie } from "cookies-next/client";
 
 type Steps = "EMAIL" | "SIGNUP" | "SIGNIN";
 
@@ -14,6 +15,11 @@ export const LoginAreaDialog = ()=>{
 
     const [ step, setStep] = useState<Steps>("EMAIL");
     const [emailField,setEmailField] = useState('');
+
+    useEffect(()=>{
+        const token = getCookie('token');
+        if(token) auth.setToken(token) 
+    }, [])
 
     const handleStepEmail = (hasEmail:boolean, email:string) =>{
         setEmailField(email);
