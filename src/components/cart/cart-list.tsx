@@ -2,10 +2,11 @@
 import { useCart } from "@/app/stores/cart";
 import { Button } from "../ui/button";
 import { useProducts } from "@/app/stores/products";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CartProduct } from "./cart-product";
 import { decimalToMoney } from "@/lib/utils";
 import { useAuth } from "@/app/stores/auth";
+import { apiWithAuth } from "@/lib/axios";
 
 export const CartList = () => {
     const auth = useAuth();
@@ -15,7 +16,7 @@ export const CartList = () => {
     const [subtotal, setSubtotal] = useState(0)
     const [shippingCost, setShippingCost] = useState(0)
 
-    const calculateState = ()=>{
+    const calculateSubtotal = ()=>{
         let sub = 0;
         for(let item of cart.items){
             const product = products.stuff.find(pitem =>pitem.id === item.productId)
@@ -23,6 +24,15 @@ export const CartList = () => {
 
         }
         setSubtotal(sub)
+    }
+    useEffect(calculateSubtotal, [cart]);
+    const handleFinish = async () =>{
+        if(cart.items.length > 0){
+            const orderReq = await apiWithAuth.post('/order/new', {
+                cart: cart.items
+            });
+            
+        }
     }
 
     return (
@@ -41,8 +51,8 @@ export const CartList = () => {
             <div className="font-bold">Total:{decimalToMoney(subtotal+shippingCost)}</div>
         </div>
             {auth.token &&
-                <Button className="bg-green-700 hover:bg-green-900">Finalize Purchase
-</Button>
+                <Button onClick={handleFinish} className="bg-green-700 hover:bg-green-900">Finalize Purchase
+                </Button>
             }
             {!auth.token &&
                 <Button onClick={() => auth.setOpen(true)}>Signin / Sign Up</Button>
