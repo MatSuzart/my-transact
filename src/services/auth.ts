@@ -49,17 +49,17 @@ export const createUser = async (
 }
 
 export const createUserToken = async (userId: number) => {
-  const token = v4()
+  const token = v4();
 
   await prisma.user.update({
     where: { id: userId },
-    data: { token },
-  })
+    data: { token }
+  });
 
-  return token
+  return token;
 }
 
-/*export const getLoggedUser = async () => {
+export const getLoggedUser = async () => {
   const headersList = await headers()
   const authorization = headersList.get('authorization')?.split(' ')
 
@@ -76,4 +76,3 @@ export const createUserToken = async (userId: number) => {
 
   return user
 }
-  */
